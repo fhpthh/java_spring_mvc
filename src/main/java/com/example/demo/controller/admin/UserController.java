@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.controller.admin;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class UserController {
     public String getUserTablePage(Model model) {
         List<User> users = this.userService.getAllUsers();
         model.addAttribute("users", users);
-        return "admin/user/table";
+        return "admin/user/show";
     }
     @RequestMapping("/admin/user/{id}") //GET
     public String getUserDetailPage(Model model, @PathVariable Long id) {
@@ -42,7 +42,7 @@ public class UserController {
         User user = this.userService.getUserById(id);
         model.addAttribute("user", user);
         model.addAttribute("id", id);
-        return "admin/user/show";
+        return "admin/user/detail";
     }
     @RequestMapping("/admin/user/create") //GET
     public String getCreateUserPage(Model model) {

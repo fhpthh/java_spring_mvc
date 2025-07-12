@@ -11,7 +11,7 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
                 <meta name="description" content="" />
                 <meta name="author" content="" />
-                <title>Table User</title>
+                <title>User Detail</title>
                 <link href="/css/styles.css" rel="stylesheet" />
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
             </head>
@@ -32,39 +32,20 @@
                                     <div class="row">
                                         <div class="col-12 mx-auto">
                                             <div class="d-flex justify-content-between">
-                                                <h3>Table user</h3>
-                                                <a href="/admin/user/create" class="btn btn-primary">Create User</a>
+                                                <h3>User Detail with id = ${id}</h3>
                                             </div>
-
                                             <hr />
-
-                                            <table class="table table-bordered table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <th>Email</th>
-                                                        <th>Full name</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <c:forEach var="user" items="${users}">
-                                                        <tr>
-                                                            <td>${user.id}</td>
-                                                            <td>${user.email}</td>
-                                                            <td>${user.fullName}</td>
-                                                            <td>
-                                                                <a href="/admin/user/${user.id}"
-                                                                    class="btn btn-success">View</a>
-                                                                <a href="/admin/user/update/${user.id}"
-                                                                    class="btn btn-warning">Update</a>
-                                                                <a href="/admin/user/delete/${user.id}"
-                                                                    class="btn btn-danger">Delete</a>
-                                                            </td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                </tbody>
-                                            </table>
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">User Information</h5>
+                                                    <p class="card-text">ID: ${user.id}</p>
+                                                    <p class="card-text">Email: ${user.email}</p>
+                                                    <p class="card-text">Full Name: ${user.fullName}</p>
+                                                    <p class="card-text">Phone: ${user.phone}</p>
+                                                    <p class="card-text">Address: ${user.address}</p>
+                                                </div>
+                                                <a href="/admin/user" class="btn btn-primary">Back to User Table</a>
+                                            </div>
 
                                         </div>
                                     </div>
