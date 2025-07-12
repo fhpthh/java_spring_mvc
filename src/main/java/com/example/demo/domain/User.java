@@ -1,11 +1,18 @@
 package com.example.demo.domain;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -16,6 +23,16 @@ public class User {
     private String fullName;
     private String address;
     private String phone;
+    private String avatar;
+    
+// roleId 
+// many Users to one Role
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
     
     public long getId() {
         return id;
@@ -54,18 +71,16 @@ public class User {
         this.phone = phone;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("User{");
-        sb.append("id=").append(id);
-        sb.append(", email=").append(email);
-        sb.append(", password=").append(password);
-        sb.append(", fullName=").append(fullName);
-        sb.append(", address=").append(address);
-        sb.append(", phone=").append(phone);
-        sb.append('}');
-        return sb.toString();
+        return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName
+                + ", address=" + address + ", phone=" + phone + ", avatar=" + avatar + "]";
     }
     
 }
