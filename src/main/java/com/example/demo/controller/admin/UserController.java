@@ -9,20 +9,24 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.domain.User;
+import com.example.demo.service.UploadService;
 import com.example.demo.service.UserService;
-
-
 
 @Controller
 public class UserController {
 
     private final UserService userService;
-    public UserController(UserService userService) {
+    private final UploadService uploadService;
+
+    public UserController(UserService userService, UploadService uploadService) {
         this.userService = userService;
+        this.uploadService = uploadService;
     }
+
     @RequestMapping("/")
     public String getHomePage(Model model) {
         // List<User> users = this.userService.getAllUserByEmail("hue@gmail.com");
@@ -30,12 +34,14 @@ public class UserController {
         model.addAttribute("test", "test");
         return "hello";
     }
+
     @RequestMapping("/admin/user")
     public String getUserTablePage(Model model) {
         List<User> users = this.userService.getAllUsers();
         model.addAttribute("users", users);
         return "admin/user/show";
     }
+
     @RequestMapping("/admin/user/{id}") //GET
     public String getUserDetailPage(Model model, @PathVariable Long id) {
         System.out.println("User ID: " + id);
@@ -44,15 +50,19 @@ public class UserController {
         model.addAttribute("id", id);
         return "admin/user/detail";
     }
-    @RequestMapping("/admin/user/create") //GET
+
+    @GetMapping("/admin/user/create") //GET
     public String getCreateUserPage(Model model) {
         model.addAttribute("newUser", new User());
         return "admin/user/create";
     }
-    
-    @RequestMapping(value = "/admin/user/create", method=RequestMethod.POST) 
-    public String createUserPage(Model model, @ModelAttribute("newUser") User pthh) {
-        this.userService.handleSaveUser(pthh);
+
+    @PostMapping("/admin/user/create")
+    public String createUserPage(Model model, @ModelAttribute("newUser") User pthh,
+            @RequestParam("pthhFile") MultipartFile file) {
+        // this.userService.handleSaveUser(pthh);
+        String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+
         return "redirect:/admin/user";
     }
 
@@ -62,10 +72,11 @@ public class UserController {
         model.addAttribute("newUser", user);
         return "admin/user/update";
     }
+
     @PostMapping(value = "/admin/user/update")
     public String UpdateUser(Model model, @ModelAttribute("newUser") User pthh) {
         User user = this.userService.getUserById(pthh.getId());
-        if(user != null) {
+        if (user != null) {
             user.setFullName(pthh.getFullName());
             user.setPhone(pthh.getPhone());
             user.setAddress(pthh.getAddress());
@@ -80,10 +91,10 @@ public class UserController {
         model.addAttribute("newUser", new User());
         return "admin/user/delete";
     }
+
     @PostMapping("/admin/user/delete")
     public String postDeleteUser(Model model, @ModelAttribute("newUser") User user) {
         this.userService.deleteUserById(user.getId());
         return "redirect:/admin/user";
     }
 }
-
