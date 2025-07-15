@@ -43,6 +43,8 @@
                                                     <p class="card-text">Full Name: ${user.fullName}</p>
                                                     <p class="card-text">Phone: ${user.phone}</p>
                                                     <p class="card-text">Address: ${user.address}</p>
+    
+                                                    <p class="card-text">Avatar: ${user.avatar}</p>
                                                 </div>
                                                 <a href="/admin/user" class="btn btn-primary">Back to User Table</a>
                                             </div>
