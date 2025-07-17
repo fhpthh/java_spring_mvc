@@ -5,6 +5,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "products")
@@ -12,13 +15,28 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @NotNull
+    @NotEmpty(message = "Ten san pham khong duoc de trong")
     private String name;
-    private  String price;
+
+    @NotNull
+    @Min(value = 0, message = "Gia san pham phai lon hon hoac bang 0")
+    private Double price;
     private String image;
-    private String detailDsec;
+
+    @NotNull
+    @NotEmpty(message = "Mo ta chi tiet san pham khong duoc de trong")
+    private String detailDesc;
+    
+    @NotNull
+    @NotEmpty(message = "Mo ta ngan san pham khong duoc de trong")
     private String shortDesc;
-    private long  quantity;
-    private long sold;
+
+    @NotNull
+    @Min(value = 0, message = "So luong san pham phai lon hon hoac bang 0")
+    private Long quantity;
+
+    private Long sold = 0L; // Initialize sold to 0
     private String factory;
     private String target;
     
@@ -34,10 +52,10 @@ public class Product {
     public void setName(String name) {
         this.name = name;
     }
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
-    public void setPrice(String price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
     public String getImage() {
@@ -46,11 +64,11 @@ public class Product {
     public void setImage(String image) {
         this.image = image;
     }
-    public String getDetailDsec() {
-        return detailDsec;
+    public String getDetailDesc() {
+        return detailDesc;
     }
-    public void setDetailDsec(String detailDsec) {
-        this.detailDsec = detailDsec;
+    public void setDetailDesc(String detailDesc) {
+        this.detailDesc = detailDesc;
     }
     public String getShortDesc() {
         return shortDesc;
@@ -58,10 +76,10 @@ public class Product {
     public void setShortDesc(String shortDesc) {
         this.shortDesc = shortDesc;
     }
-    public long getQuantity() {
+    public Long getQuantity() {
         return quantity;
     }
-    public void setQuantity(long quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
     public long getSold() {
@@ -91,7 +109,7 @@ public class Product {
         sb.append(", name=").append(name);
         sb.append(", price=").append(price);
         sb.append(", image=").append(image);
-        sb.append(", detailDsec=").append(detailDsec);
+        sb.append(", detailDesc=").append(detailDesc);
         sb.append(", shortDesc=").append(shortDesc);
         sb.append(", quantity=").append(quantity);
         sb.append(", sold=").append(sold);
