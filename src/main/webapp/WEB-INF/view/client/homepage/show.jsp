@@ -52,10 +52,6 @@
 
             <jsp:include page="../layout/header.jsp" />
 
-
-        
-
-
            <jsp:include page="../layout/banner.jsp" />
 
 
@@ -363,7 +359,7 @@
             <!-- Fruits Shop End-->
 
                        <jsp:include page="../layout/feature.jsp" />
-            js<!-- Footer Start -->
+            <!-- Footer Start -->
             <jsp:include page="../layout/footer.jsp" />
 
             <!-- Back to Top -->

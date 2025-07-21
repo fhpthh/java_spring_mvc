@@ -1,3 +1,6 @@
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,9 +28,12 @@
                                 </div>
                                 <div class="card-body">
                                     <form method="post" action="/login">
-                                        <c:if test="${not empty param.error}">
-    <div class="my-2" style="color: red;">Invalid email or password.</div>
-</c:if>
+                                        <c:if test="${param.error != null}">
+                                            <div class="my-2" style="color: red;">Invalid email or password.</div>
+                                        </c:if>
+                                        <c:if test="${param.logout != null}">
+                                            <div class="my-2" style="color: green;">logout success.</div>
+                                        </c:if>
 
                                         <div class="form-floating mb-3">
                                             <input class="form-control" type="email" placeholder="name@example.com"
