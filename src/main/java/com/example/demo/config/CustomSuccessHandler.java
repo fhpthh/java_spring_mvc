@@ -22,6 +22,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 public class CustomSuccessHandler implements AuthenticationSuccessHandler {
+
     @Autowired
     private UserService userService;
 
@@ -42,7 +43,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         throw new IllegalStateException();
     }
 
-    protected void clearAuthenticationAttributes(HttpServletRequest request,Authentication authentication ) {
+    protected void clearAuthenticationAttributes(HttpServletRequest request, Authentication authentication) {
         HttpSession session = request.getSession(false);
         if (session == null) {
             return;
@@ -50,11 +51,13 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
         String email = authentication.getName();
         User user = this.userService.getUserByEmail(email);
-        if(user != null) {
+        if (user != null) {
             session.setAttribute("fullName", user.getFullName());
             session.setAttribute("avatar", user.getAvatar());
+            session.setAttribute("id", user.getId());
+            session.setAttribute("email", user.getEmail());
         }
-        
+
     }
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
@@ -67,7 +70,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
             return;
         }
-                clearAuthenticationAttributes(request, authentication);
+        clearAuthenticationAttributes(request, authentication);
 
         redirectStrategy.sendRedirect(request, response, targetUrl);
     }
